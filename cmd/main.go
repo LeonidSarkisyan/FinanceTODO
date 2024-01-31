@@ -34,7 +34,9 @@ func main() {
 	}
 	log.Info().Msg("конфиг загружен")
 
-	db, err := sqlx.Connect("postgres", fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", cfg.Database.Host, cfg.Database.Port, cfg.Database.User, cfg.Database.Pass, cfg.Database.Name))
+	connStr := fmt.Sprintf("postgresql://%s:%s@%s:%s/%s", cfg.Database.User, cfg.Database.Pass, cfg.Database.Host, cfg.Database.Port, cfg.Database.Name)
+
+	db, err := sqlx.Open("postgres", connStr)
 	if err != nil {
 		log.Fatal().Err(err).Msg("ошибка при подключении к базе данных")
 	}
