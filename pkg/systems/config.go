@@ -3,6 +3,7 @@ package systems
 import (
 	"github.com/spf13/viper"
 	"os"
+	"strings"
 )
 
 type AppConfig struct {
@@ -51,7 +52,7 @@ func getConfig() (*AppConfig, error) {
 			Host: viper.GetString("prod_db.host"),
 			Port: viper.GetString("prod_db.port"),
 			User: os.Getenv("DB_USER"),
-			Pass: os.Getenv("DB_PASS"),
+			Pass: strings.Trim(os.Getenv("DB_PASS"), "\n "),
 			Name: viper.GetString("prod_db.name"),
 		}
 	}
