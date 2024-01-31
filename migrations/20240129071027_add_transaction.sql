@@ -7,7 +7,7 @@ CREATE TABLE transactions (
       type VARCHAR(3) NOT NULL,
       value FLOAT NOT NULL,
       created_date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      updated_date_time TIMESTAMP,
+      updated_date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       balance_id INT REFERENCES balances(id) ON DELETE CASCADE,
       sub_category_id INT REFERENCES sub_categories(id),
       user_id INT REFERENCES users(id)

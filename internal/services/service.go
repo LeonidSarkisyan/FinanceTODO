@@ -31,7 +31,7 @@ type SubCategoryService interface {
 }
 
 type TransactionService interface {
-	Create(input models.TransactionInput, balanceId, subCategoryId, userId int) (int, error)
+	Register(input models.TransactionInput, balanceId, subCategoryId, userId int) (int, error)
 	GetAll(balanceID, userID int) ([]models.Transaction, error)
 	GetByID(id int, userId int) (models.Transaction, error)
 	Update(input models.TransactionUpdate, transactionId int, userId int) error

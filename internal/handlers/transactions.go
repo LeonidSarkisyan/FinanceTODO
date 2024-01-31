@@ -25,7 +25,7 @@ func (h *Handler) CreateTransaction(c *gin.Context) {
 		return
 	}
 
-	id, err := h.services.Transaction.Create(input, balanceID, input.SubCategoryID, userID)
+	id, err := h.services.Transaction.Register(input, balanceID, input.SubCategoryID, userID)
 
 	if err != nil {
 		responses.NewErrorResponse(c, http.StatusInternalServerError, err, err.Error())

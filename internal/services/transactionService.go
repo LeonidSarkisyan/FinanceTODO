@@ -3,7 +3,10 @@ package services
 import (
 	"FinanceTODO/internal/models"
 	"FinanceTODO/internal/repositories"
+	"errors"
 )
+
+var InCorrectType = errors.New("неверный тип транзакции, тип должен быть INC или EXP")
 
 type Transaction struct {
 	repository *repositories.Repository
@@ -15,9 +18,26 @@ func NewTransactionService(repository *repositories.Repository) *Transaction {
 	}
 }
 
-func (s *Transaction) Create(input models.TransactionInput, balanceId, subCategoryId, userId int) (int, error) {
+func (s *Transaction) Register(input models.TransactionInput, balanceId, subCategoryId, userId int) (int, error) {
 	transaction := models.NewTransaction(input, balanceId, subCategoryId, userId)
-	return s.repository.Transaction.Create(*transaction)
+	transactionID, err := s.repository.Transaction.Create(*transaction)
+	if err != nil {
+		return 0, err
+	}
+	var valueToUpdate float64
+	switch input.Type {
+	case "INC":
+		valueToUpdate = input.Value
+	case "EXP":
+		valueToUpdate = -input.Value
+	default:
+		return 0, InCorrectType
+	}
+	err = s.repository.Balance.UpdateValue(valueToUpdate, balanceId, userId)
+	if err != nil {
+		return 0, err
+	}
+	return transactionID, nil
 }
 
 func (s *Transaction) GetAll(balanceID, userID int) ([]models.Transaction, error) {

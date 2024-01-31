@@ -36,6 +36,7 @@ type BalanceRepository interface {
 	GetAll(userID int) ([]models.Balance, error)
 	GetByID(balanceID, userID int) (models.Balance, error)
 	Update(balance models.BalanceUpdate, balanceID, userID int) error
+	UpdateValue(amount float64, balanceID, userID int) error
 	Delete(balanceID, userID int) error
 }
 

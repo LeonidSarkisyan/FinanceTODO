@@ -113,6 +113,14 @@ func (r *BalancePostgres) Update(balanceUpdate models.BalanceUpdate, balanceID, 
 	return err
 }
 
+func (r *BalancePostgres) UpdateValue(amount float64, balanceID, userID int) error {
+	stmt := `UPDATE balances SET value = value + $1 WHERE id = $2 AND user_id = $3`
+
+	_, err := r.db.Exec(stmt, amount, balanceID, userID)
+
+	return err
+}
+
 func (r *BalancePostgres) Delete(balanceID, userID int) error {
 	stmt := `DELETE FROM balances WHERE id = $1 AND user_id = $2`
 
