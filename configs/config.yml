@@ -1,7 +1,7 @@
 address: "localhost"
 port: "8080"
 
-debug: true
+debug: false
 
 test_db:
     host: "localhost"
@@ -11,7 +11,7 @@ test_db:
     name: "FinanceTodo"
 
 prod_db:
-    host: "localhost"
+    host: "82.97.244.195"
     port: "5432"
     user: "postgres"
     pass: "postgres"
